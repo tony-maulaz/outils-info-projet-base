@@ -1,0 +1,47 @@
+services:
+  node:
+    image: dev-vue
+    build: .
+    container_name: dev-prj
+    volumes:
+      - ./frontend:/project/frontend
+      - ./backend:/project/backend
+
+    tty: true
+    stdin_open: true
+
+    restart: "no"
+
+    environment:
+      PGHOST: db-prj
+      PGUSER: postgres
+      PGDATABASE: mydb
+      PGPASSWORD: password
+      PGPORT: 5432 
+
+    working_dir: /project
+    command: ["bash"]
+
+    ports:
+      - 3000:3000
+      - 8000:8000
+
+
+  db:
+    image: postgres
+    container_name: db-prj
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - ./db:/db
+      #- db-data:/var/lib/postgresql/data
+
+    working_dir: /db
+
+    ports:
+      - 5432:5432
+
+volumes:
+  db-data:
