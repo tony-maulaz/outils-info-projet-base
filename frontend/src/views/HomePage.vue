@@ -20,7 +20,7 @@ const loadData = async (id) => {
   data.value = null
 
   try {
-    const response = await fetch(`${url}/test/${id}`)
+    const response = await fetch(`${url}test/${id}`)
     if (!response.ok) {
       throw new Error('Erreur lors de la récupération des données');
     }

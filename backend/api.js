@@ -21,6 +21,7 @@ router
         try {
             console.log(`Récupération du test avec id : {req.params.id}`);
             const result = await db.query('select * from tests where id =$1', [req.params.id]);
+            console.log(result.rows);
             res.json(result.rows);
         }
         catch (err) {

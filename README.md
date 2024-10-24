@@ -10,6 +10,10 @@
 
 ## Démarrer le serveur (A faire à chaque fois)
 - Démarrer le conteneur Docker : `docker-compose up -d`
+- Stopper le conteneur Docker : `docker-compose down -v`
+- Pour les logs : `docker-compose logs -f -n20`
+
+> Il faut utiliser l'option `-v` pour supprimer les volumes
 
 ## Pour développer le graphique avec Vue
 - Ouvrir un terminal
