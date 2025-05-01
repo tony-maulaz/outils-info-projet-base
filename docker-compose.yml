@@ -1,10 +1,11 @@
 services:
-  node-backend:
-    image: dev-node
-    build: .
-    container_name: dev-back
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile_backend
+    container_name: back
     volumes:
-      - ./backend:/backend
+      - ./backend:/code
 
     tty: true
     stdin_open: true
@@ -12,23 +13,19 @@ services:
     restart: "no"
 
     environment:
-      PGHOST: dev-db
-      PGUSER: postgres
-      PGDATABASE: mydb
-      PGPASSWORD: password
-      PGPORT: 5432 
+      - DATABASE_URL=postgresql://postgres:password@db:5432/mydb
 
-    working_dir: /backend
-    #command: ["bash"]
-    command: ["bash", "-c", "npm install && npm run dev"]
+    working_dir: /code
+    command: ["bash"]
 
     ports:
       - 3000:3000
 
-  node-frontend:
-    image: dev-node
-    build: .
-    container_name: dev-front
+  frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile_frontend
+    container_name: front
     volumes:
       - ./frontend:/frontend
 
@@ -47,16 +44,16 @@ services:
 
   db:
     image: postgres
-    container_name: dev-db
+    container_name: db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydb
     volumes:
-      - ./db:/db
+      - ./db:/code
       #- db-data:/var/lib/postgresql/data
 
-    working_dir: /db
+    working_dir: /code
 
     ports:
       - 5432:5432

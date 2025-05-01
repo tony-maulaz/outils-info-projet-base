@@ -4,10 +4,8 @@
 
 # Configuration
 - Contrôler les noms des containers et répertoires
-- Dans `pg.js` sélectionner le schéma par défaut dans la base de données.
 
 # Développement
-
 ## Démarrer le serveur (A faire à chaque fois)
 - Démarrer le conteneur Docker : `docker-compose up -d`
 - Stopper le conteneur Docker : `docker-compose down -v`
@@ -25,13 +23,38 @@
 - Accéder au site : `http://localhost:8000/`
 
 
-# API (serveur experess)
-## Pour utiliser l'api
-- Ouvrir un terminal
-- Se connecter au conteneur web : `docker exec -it <container name> bash`
-- Aller dans le dossier du serveur express : `cd <nom du projet>`
-- Démarrer le serveur : `npm run start`
-- Démarrer le serveur : `npm run dev` pour le mode de développement
+# Python (backend)
+## Connexion au conteneur
+```bash
+docker exec -it back bash
+```
+
+## Installation des dépendances
+```bash
+poetry install --no-root
+```
+
+## Création de la base de données (tables)
+```bash
+poetry run python init_db.py
+```
+
+## Lancement du serveur
+```bash
+poetry run uvicorn main:app --host 0.0.0.0 --port 3000 --reload
+```
+
+### Swagger et documentation
+```bash
+http://127.0.0.1:3000/docs
+http://127.0.0.1:3000/redoc
+```
+
+### Test route
+```bash
+http://127.0.0.1:3000/api/persons
+```
+
 
 # Base de données
 ## Commande initialisation
@@ -46,6 +69,3 @@
 - `\q` pour quitter
 - `\c mydb` pour se connecter à la base de données
 
-### Pour configurer le schéma par défaut en ligne de commande
-- `SHOW search_path;` pour afficher le schéma par défaut
-- `SET search_path TO test;` pour changer le schéma par défaut
