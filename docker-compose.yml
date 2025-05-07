@@ -35,8 +35,8 @@ services:
     restart: "no"
 
     working_dir: /frontend
-    #command: ["bash"]
-    command: ["bash", "-c", "npm install && npm run dev"]
+    command: ["bash"]
+    #command: ["bash", "-c", "npm install && npm run dev"]
 
     ports:
       - 8000:8000

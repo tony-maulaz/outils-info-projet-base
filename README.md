@@ -5,6 +5,9 @@
 # Configuration
 - Contrôler les noms des containers et répertoires
 
+# Docker
+Pour les logs : `docker-compose logs -f -n20`
+
 # Développement
 ## Démarrer le serveur (A faire à chaque fois)
 - Démarrer le conteneur Docker : `docker-compose up -d`
