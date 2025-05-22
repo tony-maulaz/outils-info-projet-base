@@ -1,0 +1,30 @@
+FROM python:3.11-slim
+
+# Install des dépendances système nécessaires pour Poetry
+RUN apt-get update && apt-get install -y curl build-essential && \
+    apt-get clean
+
+# Installer Poetry
+ENV POETRY_VERSION=1.8.2
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    ln -s /root/.local/bin/poetry /usr/local/bin/poetry
+
+# Définir le dossier de travail
+WORKDIR /app
+
+# Copier le fichier pyproject.toml et poetry.lock pour profiter du cache
+COPY pyproject.toml poetry.lock* ./
+
+# Désactiver le virtualenv automatique de Poetry (on reste dans l'image Docker)
+ENV POETRY_VIRTUALENVS_CREATE=false
+
+# Installer les dépendances
+RUN poetry install --no-interaction --no-ansi
+
+### PRODUCTION ###
+# Copier le reste du code
+# COPY . .
+
+# Lancer l'application
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["bash"]
